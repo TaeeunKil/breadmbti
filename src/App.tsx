@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronRight, RotateCcw, Share2, Cake } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronRight, RotateCcw, Share2, Cake, Loader2 } from "lucide-react";
 
 interface Question {
   id: number;
@@ -331,6 +331,44 @@ function App() {
     P: 0,
   });
   const [result, setResult] = useState<string>("");
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+  const [isPreloading, setIsPreloading] = useState(true);
+
+  // 이미지 preload 함수
+  const preloadImage = (src: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        setImagesLoaded((prev) => ({ ...prev, [src]: true }));
+        resolve();
+      };
+      img.onerror = reject;
+      img.src = src;
+    });
+  };
+
+  // 앱 시작 시 중요한 이미지들 preload
+  useEffect(() => {
+    const preloadImages = async () => {
+      try {
+        // 시작 페이지 이미지와 자주 사용되는 이미지들 미리 로드
+        const importantImages = [
+          "/assets/튀김소보로.webp",
+          "/assets/월넛브레드.webp", // ISTJ - 자주 나올 수 있는 타입
+          "/assets/초코튀소.webp", // ENTP
+          "/assets/딸기시루.webp", // INFP
+        ];
+
+        await Promise.all(importantImages.map(preloadImage));
+        setIsPreloading(false);
+      } catch (error) {
+        console.error("이미지 preload 실패:", error);
+        setIsPreloading(false);
+      }
+    };
+
+    preloadImages();
+  }, []);
 
   const handleAnswer = (scores: Record<string, number>) => {
     const newAnswers = { ...answers };
@@ -355,6 +393,13 @@ function App() {
     ].join("");
 
     setResult(mbti);
+
+    // 결과 이미지 미리 로드
+    const bread = breadResults[mbti];
+    if (bread && !imagesLoaded[bread.image]) {
+      preloadImage(bread.image);
+    }
+
     setCurrentPage("result");
   };
 
@@ -392,11 +437,23 @@ function App() {
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center transform hover:scale-105 transition-transform duration-300">
           <div className="mb-6 flex justify-center">
-            <img
-              src="/assets/튀김소보로.webp"
-              alt="성심당 로고"
-              className="w-48 h-48 object-contain"
-            />
+            {isPreloading ? (
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Loader2 className="w-12 h-12 text-amber-500 animate-spin" />
+              </div>
+            ) : (
+              <img
+                src="/assets/튀김소보로.webp"
+                alt="성심당 로고"
+                className="w-48 h-48 object-contain"
+                onLoad={() =>
+                  setImagesLoaded((prev) => ({
+                    ...prev,
+                    "/assets/튀김소보로.webp": true,
+                  }))
+                }
+              />
+            )}
           </div>
           <h1 className="text-3xl font-bold text-amber-800 mb-2">
             성심당 빵 MBTI
@@ -470,11 +527,17 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center">
         <div className="text-8xl mb-6">
-          <img
-            src={bread.image}
-            alt={bread.name}
-            className="w-50 h-50 object-contain mx-auto"
-          />
+          {imagesLoaded[bread.image] ? (
+            <img
+              src={bread.image}
+              alt={bread.name}
+              className="w-50 h-50 object-contain mx-auto"
+            />
+          ) : (
+            <div className="w-50 h-50 flex items-center justify-center mx-auto">
+              <Loader2 className="w-16 h-16 text-amber-500 animate-spin" />
+            </div>
+          )}
         </div>
 
         <h1 className="text-2xl font-bold text-amber-800 mb-2">
