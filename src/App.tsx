@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ChevronRight, RotateCcw, Share2, Cake } from "lucide-react";
-import 튀김소보로 from "./assets/튀김소보로.webp";
 
 interface Question {
   id: number;
@@ -207,112 +206,112 @@ const breadResults: Record<string, BreadResult> = {
     description:
       "성심당의 절대 대표작! 겉보기엔 단순하지만 깊이 있는 풍미와 완벽한 조화를 자랑해요. 독창적이고 체계적인 당신과 닮았어요.",
     traits: ["전략적 사고", "독립적", "완벽주의", "미래지향적"],
-    image: "/src/assets/튀김소보로.webp",
+    image: "/assets/튀김소보로.webp",
   },
   INTP: {
     name: "보문산메아리",
     description:
       "대전 보문산의 추억을 담은 부드러운 몽블랑빵. 시작점부터 천천히 뜯어 맛을 음미하듯, 깊이 있게 사고하는 당신과 닮았어요.",
     traits: ["논리적 분석", "창의적", "독립적", "호기심 많음"],
-    image: "/src/assets/보문산메아리.webp",
+    image: "/assets/보문산메아리.webp",
   },
   ENTJ: {
     name: "S브레드",
     description:
       "맷돌로 간 통밀과 헤이즐넛, 호박씨 등 다양한 견과류가 들어간 든든하고 고소한 빵으로, 목표 지향적인 든든한한 당신의 리더십을 보여줘요.",
     traits: ["리더십", "목표지향", "효율성", "추진력"],
-    image: "/src/assets/S브레드.webp",
+    image: "/assets/S브레드.webp",
   },
   ENTP: {
     name: "초코튀소",
     description:
       "튀김소보로 40주년 기념 혁신작! 바삭한 튀소에 초콜릿 코팅을 더한 '완생의 빵'. 끊임없는 아이디어와 혁신으로 발전하는 당신과 닮았어요.",
     traits: ["창의적", "활발함", "적응력", "혁신적"],
-    image: "/src/assets/초코튀소.webp",
+    image: "/assets/초코튀소.webp",
   },
   INFJ: {
     name: "교황님의 치아바타",
     description:
       "2014년 프란치스코 교황님께 제공된 특별한 빵! 인공 첨가물 없는 순수한 재료로 만든 쫄깃한 이탈리아 빵. 깊은 신념과 이상을 가진 당신과 닮았어요.",
     traits: ["이상주의", "통찰력", "공감능력", "신중함"],
-    image: "/src/assets/교황님의 치아바타.webp",
+    image: "/assets/교황님의 치아바타.webp",
   },
   INFP: {
     name: "딸기시루",
     description:
       "성심당의 봄 한정 시그니처! 섬세한 딸기와 부드러운 시루의 조화처럼, 순수하고 따뜻한 마음을 가진 당신의 감성과 어울려요.",
     traits: ["순수함", "창의적", "공감적", "이상추구"],
-    image: "/src/assets/딸기시루.webp",
+    image: "/assets/딸기시루.webp",
   },
   ENFJ: {
     name: "판타롱부추빵",
     description:
       "2012년 특허 등록! 스모크 햄과 부추, 삶은 달걀이 어우러진 든든한 빵. 다양한 재료를 조화롭게 만드는 당신의 리더십을 보여줘요.",
     traits: ["배려심", "카리스마", "공감능력", "협력적"],
-    image: "/src/assets/판타롱부추빵.webp",
+    image: "/assets/판타롱부추빵.webp",
   },
   ENFP: {
     name: "크림치즈화이트번",
     description:
       "하얀 부드러운 빵 속 꾸덕한 블루베리 크림치즈와 톡톡 터지는 블루베리 알갱이! 다양한 식감과 상큼함으로 활발하고 창의적인 당신을 표현해요.",
     traits: ["활발함", "낙관적", "창의적", "사교적"],
-    image: "/src/assets/크림치즈화이트번.webp",
+    image: "/assets/크림치즈화이트번.webp",
   },
   ISTJ: {
     name: "월넛브레드",
     description:
       "2018년 명예의 전당에 오른 검증된 베스트셀러! 호두와 견과류가 가득한 고소하고 든든한 빵으로 신뢰할 수 있는 당신의 안정감을 보여줘요.",
     traits: ["책임감", "신뢰성", "체계적", "현실적"],
-    image: "/src/assets/월넛브레드.webp",
+    image: "/assets/월넛브레드.webp",
   },
   ISFJ: {
     name: "순수롤",
     description:
       "100% 순수 우유 크림을 듬뿍 넣은 담백한 롤케이크! 깔끔하고 정성스러운 맛으로 헌신적이고 세심한 당신의 따뜻함을 보여줘요.",
     traits: ["배려심", "헌신적", "따뜻함", "세심함"],
-    image: "/src/assets/순수롤.webp",
+    image: "/assets/순수롤.webp",
   },
   ESTJ: {
     name: "명란바게트",
     description:
       "바삭한 바게트에 최고급 덕화명란이 가득! 고품질 재료와 완벽한 조합으로 실용적이면서도 체계적인 당신의 면모를 보여줘요.",
     traits: ["체계적", "실용적", "리더십", "책임감"],
-    image: "/src/assets/명란바게트.webp",
+    image: "/assets/명란바게트.webp",
   },
   ESFJ: {
     name: "공주알밤식빵",
     description:
       "부드럽고 촉촉한 식빵 속에 달콤하고 담백한 공주알밤과 고구마가 콕콕 박혀 있는 영양 만점 식빵! 소보로 가루와 아몬드가 듬뿍 들어있어 풍미를 더하며, 자꾸만 손이 가는 마법 같은 맛으로 사교적인 당신과 어울려요.",
     traits: ["사교적", "배려심", "협력적", "따뜻함"],
-    image: "/src/assets/공주알밤식빵.webp",
+    image: "/assets/공주알밤식빵.webp",
   },
   ISTP: {
     name: "튀소구마",
     description:
       "튀김소보로의 고구마 버전! 바삭한 튀김옷 속 달콤한 고구마 무스로 조용하지만 확실한 매력을 가진, 실용적인 당신과 닮았어요.",
     traits: ["실용적", "독립적", "분석적", "현실적"],
-    image: "/src/assets/튀소구마.webp",
+    image: "/assets/튀소구마.webp",
   },
   ISFP: {
     name: "김치찹쌀주먹밥",
     description:
       "찹쌀밥에 김치와 채소를 넣고 바삭하게 튀긴 독창적인 메뉴! 누룽지 같은 고소함과 매콤함으로 조용하지만 확실한 개성을 보여줘요.",
     traits: ["예술적", "온화함", "섬세함", "개성적"],
-    image: "/src/assets/김치찹쌀주먹밥.webp",
+    image: "/assets/김치찹쌀주먹밥.webp",
   },
   ESTP: {
     name: "키다리트위스트",
     description:
       "9번 꼬아 만든 길쭉한 꽈배기 도넛! 바삭하고 쫄깃한 페이스트리로 활동적이고 에너지 넘치는 당신의 역동적인 매력을 보여줘요.",
     traits: ["활동적", "즉흥적", "사교적", "현실적"],
-    image: "/src/assets/키다리트위스트.webp",
+    image: "/assets/키다리트위스트.webp",
   },
   ESFP: {
     name: "토요빵",
     description:
       "2005년 토요일에 탄생한 보랏빛 빵! 적고구마와 타피오카 떡, 버터 쿠키 크럼의 특별한 조합으로 밝고 독특한 당신의 매력을 보여줘요.",
     traits: ["밝음", "사교적", "즉흥적", "낙관적"],
-    image: "/src/assets/토요빵.webp",
+    image: "/assets/토요빵.webp",
   },
 };
 
@@ -394,7 +393,7 @@ function App() {
         <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center transform hover:scale-105 transition-transform duration-300">
           <div className="mb-6 flex justify-center">
             <img
-              src={튀김소보로}
+              src="/assets/튀김소보로.webp"
               alt="성심당 로고"
               className="w-48 h-48 object-contain"
             />
@@ -471,15 +470,11 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center">
         <div className="text-8xl mb-6">
-          {bread.image.startsWith("/src/assets/") ? (
-            <img
-              src={bread.image}
-              alt={bread.name}
-              className="w-50 h-50 object-contain mx-auto"
-            />
-          ) : (
-            bread.image
-          )}
+          <img
+            src={bread.image}
+            alt={bread.name}
+            className="w-50 h-50 object-contain mx-auto"
+          />
         </div>
 
         <h1 className="text-2xl font-bold text-amber-800 mb-2">
