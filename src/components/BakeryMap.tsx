@@ -70,45 +70,69 @@ export default function BakeryMap() {
                 viewBox="0 0 100 100" 
                 preserveAspectRatio="xMidYMid meet"
               >
-                {/* 대전 지역 대략적인 모양 */}
+                {/* 대전 전체 윤곽 */}
                 <path
-                  d="M20,30 Q25,25 35,28 L45,25 Q55,22 65,28 L75,35 Q80,45 78,55 L75,65 Q70,75 60,78 L45,80 Q35,82 25,78 L15,70 Q12,60 15,50 L18,40 Q20,35 20,30 Z"
+                  d="M15,25 Q20,15 30,18 L40,12 Q50,8 60,15 L70,20 Q80,25 85,35 L88,45 Q90,55 85,65 L80,75 Q75,85 65,88 L50,90 Q35,92 25,88 L15,82 Q8,75 10,65 L12,55 Q10,45 12,35 L15,25 Z"
                   fill="rgba(251, 191, 36, 0.2)"
                   stroke="rgba(251, 191, 36, 0.4)"
                   strokeWidth="0.5"
                 />
                 
-                {/* 구 경계선들 */}
+                {/* 유성구 영역 */}
                 <path
-                  d="M35,28 Q45,35 50,45 L55,55 Q50,65 45,70"
-                  stroke="rgba(249, 115, 22, 0.3)"
+                  d="M15,25 Q20,15 30,18 L35,25 Q40,30 35,40 L30,50 Q25,60 20,65 L15,70 Q10,60 12,50 L15,40 Q12,35 15,25 Z"
+                  fill="rgba(251, 191, 36, 0.1)"
+                  stroke="rgba(249, 115, 22, 0.2)"
                   strokeWidth="0.3"
-                  fill="none"
-                  strokeDasharray="1,1"
                 />
+                
+                {/* 대덕구 영역 */}
                 <path
-                  d="M50,45 Q60,40 65,50 L70,60"
-                  stroke="rgba(249, 115, 22, 0.3)"
+                  d="M40,12 Q50,8 60,15 L70,20 Q75,25 70,35 L65,45 Q60,50 55,45 L50,40 Q45,35 40,30 L35,25 Q38,18 40,12 Z"
+                  fill="rgba(251, 191, 36, 0.1)"
+                  stroke="rgba(249, 115, 22, 0.2)"
                   strokeWidth="0.3"
-                  fill="none"
-                  strokeDasharray="1,1"
+                />
+                
+                {/* 동구 영역 */}
+                <path
+                  d="M70,20 Q80,25 85,35 L88,45 Q85,55 80,60 L75,65 Q70,60 65,55 L60,50 Q65,45 70,35 Q75,25 70,20 Z"
+                  fill="rgba(251, 191, 36, 0.1)"
+                  stroke="rgba(249, 115, 22, 0.2)"
+                  strokeWidth="0.3"
+                />
+                
+                {/* 중구 영역 */}
+                <path
+                  d="M35,40 Q40,35 50,40 L60,45 Q65,50 60,60 L55,70 Q50,75 45,70 L35,65 Q30,60 35,50 L35,40 Z"
+                  fill="rgba(251, 191, 36, 0.15)"
+                  stroke="rgba(249, 115, 22, 0.3)"
+                  strokeWidth="0.4"
+                />
+                
+                {/* 서구 영역 */}
+                <path
+                  d="M20,65 Q25,60 35,65 L45,70 Q50,75 45,85 L35,88 Q25,88 20,82 L15,75 Q12,70 15,65 L20,65 Z"
+                  fill="rgba(251, 191, 36, 0.1)"
+                  stroke="rgba(249, 115, 22, 0.2)"
+                  strokeWidth="0.3"
                 />
               </svg>
 
-              {/* 지역 라벨들 */}
-              <div className="absolute top-4 left-4 text-xs md:text-sm font-semibold text-amber-700 bg-white/80 px-2 py-1 rounded">
+              {/* 구별 라벨들 - 실제 위치에 맞게 배치 */}
+              <div className="absolute top-6 left-6 text-xs md:text-sm font-semibold text-amber-700 bg-white/90 px-2 py-1 rounded shadow-sm">
                 유성구
               </div>
-              <div className="absolute top-8 right-8 text-xs md:text-sm font-semibold text-amber-700 bg-white/80 px-2 py-1 rounded">
+              <div className="absolute top-4 right-6 text-xs md:text-sm font-semibold text-amber-700 bg-white/90 px-2 py-1 rounded shadow-sm">
                 대덕구
               </div>
-              <div className="absolute bottom-16 left-8 text-xs md:text-sm font-semibold text-amber-700 bg-white/80 px-2 py-1 rounded">
-                서구
-              </div>
-              <div className="absolute bottom-8 right-12 text-xs md:text-sm font-semibold text-amber-700 bg-white/80 px-2 py-1 rounded">
+              <div className="absolute top-6 right-16 text-xs md:text-sm font-semibold text-amber-700 bg-white/90 px-2 py-1 rounded shadow-sm">
                 동구
               </div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-sm md:text-base font-bold text-amber-800 bg-white/90 px-3 py-2 rounded-lg shadow-md">
+              <div className="absolute bottom-12 left-8 text-xs md:text-sm font-semibold text-amber-700 bg-white/90 px-2 py-1 rounded shadow-sm">
+                서구
+              </div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-sm md:text-base font-bold text-amber-800 bg-white/95 px-3 py-2 rounded-lg shadow-lg border border-amber-200">
                 중구
               </div>
 
@@ -125,13 +149,13 @@ export default function BakeryMap() {
                 >
                   <div className="relative">
                     {/* 마커 핀 */}
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-red-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200 border-2 border-white">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-red-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200 border-3 border-white">
                       <MapPin className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     </div>
                     
                     {/* 호버 시 나타나는 라벨 */}
                     <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                      <div className="bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                      <div className="bg-gray-800 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap shadow-lg">
                         {bakery.name}
                       </div>
                       <div className="w-2 h-2 bg-gray-800 transform rotate-45 mx-auto -mt-1"></div>
