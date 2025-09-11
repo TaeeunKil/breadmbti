@@ -1,18 +1,21 @@
-import { useState } from 'react';
-import { MapPin, Cake, Shuffle, Menu, X } from 'lucide-react';
+import { useState } from "react";
+import { MapPin, Cake, Shuffle, Menu, X } from "lucide-react";
 
 interface NavigationProps {
   currentPage: string;
   onPageChange: (page: string) => void;
 }
 
-export default function Navigation({ currentPage, onPageChange }: NavigationProps) {
+export default function Navigation({
+  currentPage,
+  onPageChange,
+}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { id: 'mbti', label: '빵 MBTI', icon: Cake },
-    { id: 'map', label: '빵집 지도', icon: MapPin },
-    { id: 'random', label: '오늘의 빵 담당자', icon: Shuffle },
+    { id: "mbti", label: "빵 MBTI", icon: Cake },
+    { id: "map", label: "빵집 지도", icon: MapPin },
+    { id: "random", label: "오늘의 빵 담당자", icon: Shuffle },
   ];
 
   return (
@@ -27,7 +30,7 @@ export default function Navigation({ currentPage, onPageChange }: NavigationProp
               className="h-10 w-10 object-contain"
             />
             <span className="ml-2 text-xl font-bold text-amber-800">
-              성심당 가이드
+              대전 빵산책
             </span>
           </div>
 
@@ -42,8 +45,8 @@ export default function Navigation({ currentPage, onPageChange }: NavigationProp
                     onClick={() => onPageChange(item.id)}
                     className={`px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-200 ${
                       currentPage === item.id
-                        ? 'bg-amber-100 text-amber-800'
-                        : 'text-gray-600 hover:text-amber-800 hover:bg-amber-50'
+                        ? "bg-amber-100 text-amber-800"
+                        : "text-gray-600 hover:text-amber-800 hover:bg-amber-50"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -60,7 +63,11 @@ export default function Navigation({ currentPage, onPageChange }: NavigationProp
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-600 hover:text-amber-800 p-2"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -80,8 +87,8 @@ export default function Navigation({ currentPage, onPageChange }: NavigationProp
                     }}
                     className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center gap-2 transition-all duration-200 ${
                       currentPage === item.id
-                        ? 'bg-amber-100 text-amber-800'
-                        : 'text-gray-600 hover:text-amber-800 hover:bg-amber-50'
+                        ? "bg-amber-100 text-amber-800"
+                        : "text-gray-600 hover:text-amber-800 hover:bg-amber-50"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
