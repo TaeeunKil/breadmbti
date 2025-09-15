@@ -406,7 +406,7 @@ export default function MBTITest() {
         await Promise.all(importantImages.map(preloadImage));
         setIsPreloading(false);
       } catch (error) {
-        console.error("이미지 preload 실패:", error);
+        // console.error("이미지 preload 실패:", error);
         setIsPreloading(false);
       }
     };
@@ -417,11 +417,11 @@ export default function MBTITest() {
   // 카카오 SDK 동적 로드 및 초기화
   useEffect(() => {
     const loadKakaoSDK = () => {
-      console.log("=== 카카오 SDK 로드 시도 ===");
+      // console.log("=== 카카오 SDK 로드 시도 ===");
 
       // 이미 로드되어 있는지 확인
       if (window.Kakao) {
-        console.log("✅ 카카오 SDK 이미 로드됨");
+        // console.log("✅ 카카오 SDK 이미 로드됨");
         initKakaoSDK();
         return;
       }
@@ -432,35 +432,35 @@ export default function MBTITest() {
       script.crossOrigin = "anonymous";
 
       script.onload = () => {
-        console.log("✅ 카카오 SDK 스크립트 로드 완료");
+        // console.log("✅ 카카오 SDK 스크립트 로드 완료");
         initKakaoSDK();
       };
 
       script.onerror = () => {
-        console.error("❌ 카카오 SDK 스크립트 로드 실패");
+        // console.error("❌ 카카오 SDK 스크립트 로드 실패");
       };
 
       document.head.appendChild(script);
     };
 
     const initKakaoSDK = () => {
-      console.log("=== 카카오 SDK 초기화 시도 ===");
-      console.log("window.Kakao 존재:", !!window.Kakao);
+      // console.log("=== 카카오 SDK 초기화 시도 ===");
+      // console.log("window.Kakao 존재:", !!window.Kakao);
 
       if (window.Kakao && !window.Kakao.isInitialized()) {
         const kakaoAppKey = import.meta.env.VITE_KAKAO_APP_KEY;
-        console.log("카카오 앱 키:", kakaoAppKey ? "설정됨" : "없음");
+        // console.log("카카오 앱 키:", kakaoAppKey ? "설정됨" : "없음");
 
         if (kakaoAppKey) {
           window.Kakao.init(kakaoAppKey);
-          console.log("✅ 카카오 SDK 초기화 완료");
+          // console.log("✅ 카카오 SDK 초기화 완료");
         } else {
-          console.warn("❌ 카카오 앱 키가 설정되지 않았습니다.");
+          // console.warn("❌ 카카오 앱 키가 설정되지 않았습니다.");
         }
       } else if (window.Kakao && window.Kakao.isInitialized()) {
-        console.log("✅ 카카오 SDK 이미 초기화됨");
+        // console.log("✅ 카카오 SDK 이미 초기화됨");
       } else {
-        console.log("❌ window.Kakao 없음 - SDK 로드 실패");
+        // console.log("❌ window.Kakao 없음 - SDK 로드 실패");
       }
     };
 
@@ -512,16 +512,16 @@ export default function MBTITest() {
     const bread = breadResults[result];
     const currentUrl = window.location.href;
 
-    console.log("=== 카카오톡 공유 시도 ===");
-    console.log("window.Kakao 존재:", !!window.Kakao);
-    console.log(
-      "Kakao 초기화 상태:",
-      window.Kakao ? window.Kakao.isInitialized() : false
-    );
-    console.log(
-      "환경변수 키:",
-      import.meta.env.VITE_KAKAO_APP_KEY ? "설정됨" : "없음"
-    );
+    // console.log("=== 카카오톡 공유 시도 ===");
+    // console.log("window.Kakao 존재:", !!window.Kakao);
+    // console.log(
+    //   "Kakao 초기화 상태:",
+    //   window.Kakao ? window.Kakao.isInitialized() : false
+    // );
+    // console.log(
+    //   "환경변수 키:",
+    //   import.meta.env.VITE_KAKAO_APP_KEY ? "설정됨" : "없음"
+    // );
 
     if (window.Kakao && window.Kakao.isInitialized()) {
       try {
@@ -531,12 +531,12 @@ export default function MBTITest() {
             ? `${window.location.origin}${bread.image}`
             : `https://breadmbti.vercel.app${bread.image}`;
 
-        console.log("카카오톡 공유 데이터:", {
-          title: `저는 '${bread.name}'에요!`,
-          description: "당신은 무슨 빵인가요? 재미있는 테스트로 알아보세요!",
-          imageUrl: imageUrl,
-          url: currentUrl,
-        });
+        // console.log("카카오톡 공유 데이터:", {
+        //   title: `저는 '${bread.name}'에요!`,
+        //   description: "당신은 무슨 빵인가요? 재미있는 테스트로 알아보세요!",
+        //   imageUrl: imageUrl,
+        //   url: currentUrl,
+        // });
 
         window.Kakao.Share.sendDefault({
           objectType: "feed",
@@ -559,14 +559,18 @@ export default function MBTITest() {
             },
           ],
         });
-        console.log("✅ 카카오톡 공유 요청 완료");
+        // console.log("✅ 카카오톡 공유 요청 완료");
       } catch (error) {
-        console.error("❌ 카카오톡 공유 예외:", error);
-        alert(`카카오톡 공유 오류: ${error.message}`);
+        // console.error("❌ 카카오톡 공유 예외:", error);
+        alert(
+          `카카오톡 공유 오류: ${
+            error instanceof Error ? error.message : "알 수 없는 오류"
+          }`
+        );
         shareResult();
       }
     } else {
-      console.log("카카오 SDK 없음 - 일반 공유로 이동");
+      // console.log("카카오 SDK 없음 - 일반 공유로 이동");
       alert("카카오톡 공유를 사용할 수 없습니다. 일반 공유를 이용해주세요.");
       shareResult();
     }
@@ -584,9 +588,9 @@ export default function MBTITest() {
           text: shareText,
           url: window.location.href,
         });
-        console.log("✅ 일반 공유 성공");
+        // console.log("✅ 일반 공유 성공");
       } catch (error) {
-        console.log("❌ 일반 공유 실패:", error);
+        // console.log("❌ 일반 공유 실패:", error);
         // Web Share API 실패 시 클립보드 복사로 대체
         try {
           await navigator.clipboard.writeText(
@@ -594,7 +598,7 @@ export default function MBTITest() {
           );
           alert("링크가 복사되었습니다!");
         } catch (clipboardError) {
-          console.log("❌ 클립보드 복사 실패:", clipboardError);
+          // console.log("❌ 클립보드 복사 실패:", clipboardError);
           // 클립보드도 실패하면 수동 복사 안내
           const textToCopy = `${shareText} ${window.location.href}`;
           prompt("아래 링크를 복사해주세요:", textToCopy);
@@ -608,7 +612,7 @@ export default function MBTITest() {
         );
         alert("링크가 복사되었습니다!");
       } catch (error) {
-        console.log("❌ 클립보드 복사 실패:", error);
+        // console.log("❌ 클립보드 복사 실패:", error);
         // 클립보드도 실패하면 수동 복사 안내
         const textToCopy = `${shareText} ${window.location.href}`;
         prompt("아래 링크를 복사해주세요:", textToCopy);
@@ -751,7 +755,7 @@ export default function MBTITest() {
         <div className="space-y-3">
           <button
             onClick={shareToKakao}
-            className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 font-semibold py-3 px-6 rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+            className="w-full bg-[#FEE500] text-[#371d1e] font-bold py-3 px-6 rounded-xl hover:bg-[#FFD400] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
           >
             <MessageCircle className="w-4 h-4" />
             카카오톡으로 공유하기
