@@ -1,5 +1,19 @@
 import { useState, useEffect } from "react";
-import { ChevronRight, RotateCcw, Share2, Cake, Loader2 } from "lucide-react";
+import {
+  ChevronRight,
+  RotateCcw,
+  Share2,
+  Cake,
+  Loader2,
+  MessageCircle,
+} from "lucide-react";
+
+// 카카오 SDK 타입 선언
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 interface Question {
   id: number;
@@ -39,8 +53,14 @@ const questions: Question[] = [
         text: "다른 시간에 혼자 조용히 오는 게 낫겠어... 😅",
         scores: { I: 2 },
       },
-      { text: "온라인 주문이나 다른 방법을 찾아본다 🔍", scores: { N: 1 } },
-      { text: "이미 와서 기다리는 게 맞지, 차분히 대기 ⏰", scores: { S: 1 } },
+      {
+        text: "온라인 주문이나 다른 방법을 찾아본다 🔍",
+        scores: { N: 2, T: 1 },
+      },
+      {
+        text: "이미 와서 기다리는 게 맞지, 차분히 대기 ⏰",
+        scores: { S: 2, J: 1 },
+      },
     ],
   },
   {
@@ -49,8 +69,8 @@ const questions: Question[] = [
     options: [
       { text: "어떤 맛일지 상상해보며 바로 주문! ✨", scores: { N: 2 } },
       { text: "리뷰 검색부터... 실패하면 돈 아까워 📱", scores: { S: 2 } },
-      { text: "주변 사람들 반응을 살펴보고 결정 👥", scores: { F: 1 } },
-      { text: "가격 대비 양과 재료를 꼼꼼히 분석 📊", scores: { T: 1 } },
+      { text: "주변 사람들 반응을 살펴보고 결정 👥", scores: { F: 2, S: 1 } },
+      { text: "가격 대비 양과 재료를 꼼꼼히 분석 📊", scores: { T: 2, J: 1 } },
     ],
   },
   {
@@ -59,8 +79,14 @@ const questions: Question[] = [
     options: [
       { text: "손님들과 대화를 어떻게 해야 할지... 😰", scores: { I: 2 } },
       { text: "다양한 사람들을 만날 수 있어서 기대돼! 😊", scores: { E: 2 } },
-      { text: "빵 종류와 가격을 정확히 외울 수 있을까? 🤔", scores: { S: 1 } },
-      { text: "고객 서비스의 철학과 방향성이 궁금해 💭", scores: { N: 1 } },
+      {
+        text: "빵 종류와 가격을 정확히 외울 수 있을까? 🤔",
+        scores: { S: 2, J: 1 },
+      },
+      {
+        text: "고객 서비스의 철학과 방향성이 궁금해 💭",
+        scores: { N: 2, F: 1 },
+      },
     ],
   },
   {
@@ -91,8 +117,11 @@ const questions: Question[] = [
     options: [
       { text: "시간표 짜고 교통편까지 완벽하게 준비 🗓️", scores: { J: 2 } },
       { text: "대략적인 루트만 정하고 즉흥적으로 탐험 🚶‍♀️", scores: { P: 2 } },
-      { text: "맛집 블로그와 리뷰를 꼼꼼히 리서치 📚", scores: { S: 1 } },
-      { text: "숨겨진 로컬 맛집을 발굴하는 게 목표 🕵️‍♀️", scores: { N: 1 } },
+      { text: "맛집 블로그와 리뷰를 꼼꼼히 리서치 📚", scores: { S: 2, T: 1 } },
+      {
+        text: "숨겨진 로컬 맛집을 발굴하는 게 목표 🕵️‍♀️",
+        scores: { N: 2, P: 1 },
+      },
     ],
   },
   {
@@ -123,8 +152,14 @@ const questions: Question[] = [
         text: "직원이 바빠 보이니 그냥 이것도 괜찮다고 넘어가기 😅",
         scores: { F: 2 },
       },
-      { text: "매니저를 불러서 시스템적인 해결책 요구 👔", scores: { J: 1 } },
-      { text: "상황을 재미있게 받아들이며 유연하게 대처 😄", scores: { P: 1 } },
+      {
+        text: "매니저를 불러서 시스템적인 해결책 요구 👔",
+        scores: { J: 2, T: 1 },
+      },
+      {
+        text: "상황을 재미있게 받아들이며 유연하게 대처 😄",
+        scores: { P: 2, F: 1 },
+      },
     ],
   },
   {
@@ -152,10 +187,13 @@ const questions: Question[] = [
     options: [
       { text: "상대방이 좋아할 만한 빵을 함께 찾아주기 💕", scores: { F: 2 } },
       { text: "가성비 좋고 맛있는 곳으로 효율적인 선택 💰", scores: { T: 2 } },
-      { text: "분위기 좋은 곳에서 편안한 대화 나누기 ☕", scores: { S: 1 } },
+      {
+        text: "분위기 좋은 곳에서 편안한 대화 나누기 ☕",
+        scores: { S: 2, F: 1 },
+      },
       {
         text: "특별하고 독특한 빵집으로 기억에 남을 경험 🌟",
-        scores: { N: 1 },
+        scores: { N: 2, P: 1 },
       },
     ],
   },
@@ -170,9 +208,9 @@ const questions: Question[] = [
       },
       {
         text: "단계별 출시 계획을 세우고 체계적으로 진행 📅",
-        scores: { J: 1 },
+        scores: { J: 2, T: 1 },
       },
-      { text: "직감과 영감에 따라 자유롭게 실험 💡", scores: { F: 1 } },
+      { text: "직감과 영감에 따라 자유롭게 실험 💡", scores: { F: 2, P: 1 } },
     ],
   },
   {
@@ -181,8 +219,11 @@ const questions: Question[] = [
     options: [
       { text: "주변 사람들과 자연스럽게 대화 시작 💬", scores: { E: 2 } },
       { text: "스마트폰으로 조용히 시간 보내기 📱", scores: { I: 2 } },
-      { text: "매장 인테리어와 시스템 관찰하며 분석 🔍", scores: { T: 1 } },
-      { text: "빵 냄새 맡으며 상상의 나래 펼치기 ☁️", scores: { N: 1 } },
+      {
+        text: "매장 인테리어와 시스템 관찰하며 분석 🔍",
+        scores: { T: 2, S: 1 },
+      },
+      { text: "빵 냄새 맡으며 상상의 나래 펼치기 ☁️", scores: { N: 2, F: 1 } },
     ],
   },
   {
@@ -191,10 +232,13 @@ const questions: Question[] = [
     options: [
       { text: "미리 예약하고 시간과 장소를 정확히 공지 📋", scores: { J: 2 } },
       { text: "당일 분위기 보고 즉석에서 결정하자! 🎲", scores: { P: 2 } },
-      { text: "모든 사람의 취향과 일정을 고려해서 조율 🤝", scores: { F: 1 } },
+      {
+        text: "모든 사람의 취향과 일정을 고려해서 조율 🤝",
+        scores: { F: 2, S: 1 },
+      },
       {
         text: "가장 효율적인 시간대와 장소로 합리적 선택 ⚡",
-        scores: { T: 1 },
+        scores: { T: 2, J: 1 },
       },
     ],
   },
@@ -204,112 +248,112 @@ const breadResults: Record<string, BreadResult> = {
   INTJ: {
     name: "튀김소보로",
     description:
-      "성심당의 절대 대표작! 겉보기엔 단순하지만 깊이 있는 풍미와 완벽한 조화를 자랑해요. 독창적이고 체계적인 당신과 닮았어요.",
+      "성심당의 절대 대표작! 겉보기엔 단순해 보이지만 깊이 있는 풍미와 완벽한 조화로 모든 사람을 매혹시켜요. 당신도 독창적이고 체계적인 매력을 가졌을 거예요.",
     traits: ["전략적 사고", "독립적", "완벽주의", "미래지향적"],
     image: "/assets/튀김소보로.webp",
   },
   INTP: {
     name: "보문산메아리",
     description:
-      "대전 보문산의 추억을 담은 부드러운 몽블랑빵. 시작점부터 천천히 뜯어 맛을 음미하듯, 깊이 있게 사고하는 당신과 닮았어요.",
+      "대전 보문산의 추억을 담은 부드러운 몽블랑빵. 한 입 한 입 음미할 때마다 새로운 맛을 발견하게 해주듯, 당신도 깊이 있는 사고와 창의적 매력을 가졌을 거예요.",
     traits: ["논리적 분석", "창의적", "독립적", "호기심 많음"],
     image: "/assets/보문산메아리.webp",
   },
   ENTJ: {
     name: "S브레드",
     description:
-      "맷돌로 간 통밀과 헤이즐넛, 호박씨 등 다양한 견과류가 들어간 든든하고 고소한 빵으로, 목표 지향적인 든든한한 당신의 리더십을 보여줘요.",
+      "맷돌로 간 통밀과 다양한 견과류로 영양과 맛을 모두 잡은 완벽한 빵! 모든 사람이 인정하는 든든함과 고소함으로, 당신도 목표를 이루는 리더십을 가졌을 거예요.",
     traits: ["리더십", "목표지향", "효율성", "추진력"],
     image: "/assets/S브레드.webp",
   },
   ENTP: {
     name: "초코튀소",
     description:
-      "튀김소보로 40주년 기념 혁신작! 바삭한 튀소에 초콜릿 코팅을 더한 '완생의 빵'. 끊임없는 아이디어와 혁신으로 발전하는 당신과 닮았어요.",
+      "튀김소보로 40주년 기념 혁신작! 전통과 혁신이 만난 '완생의 빵'으로 모든 사람을 놀라게 했어요. 당신도 끊임없는 아이디어와 혁신으로 사람들을 놀라게 할 것 같아요.",
     traits: ["창의적", "활발함", "적응력", "혁신적"],
     image: "/assets/초코튀소.webp",
   },
   INFJ: {
     name: "교황님의 치아바타",
     description:
-      "2014년 프란치스코 교황님께 제공된 특별한 빵! 인공 첨가물 없는 순수한 재료로 만든 쫄깃한 이탈리아 빵. 깊은 신념과 이상을 가진 당신과 닮았어요.",
+      "2014년 프란치스코 교황님께 제공된 특별한 빵! 인공 첨가물 없는 순수한 재료로 만든 쫄깃한 이탈리아 빵으로 특별함을 인정받았어요. 당신도 깊은 신념과 이상으로 사람들에게 특별한 존재일 거예요.",
     traits: ["이상주의", "통찰력", "공감능력", "신중함"],
     image: "/assets/교황님의 치아바타.webp",
   },
   INFP: {
     name: "딸기시루",
     description:
-      "성심당의 봄 한정 시그니처! 섬세한 딸기와 부드러운 시루의 조화처럼, 순수하고 따뜻한 마음을 가진 당신의 감성과 어울려요.",
+      "성심당의 봄 한정 시그니처! 섬세한 딸기와 부드러운 시루가 만들어내는 달콤함으로 모든 사람의 마음을 따뜻하게 해줘요. 당신도 순수하고 창의적인 감성으로 사람들을 행복하게 만들 것 같아요.",
     traits: ["순수함", "창의적", "공감적", "이상추구"],
     image: "/assets/딸기시루.webp",
   },
   ENFJ: {
     name: "판타롱부추빵",
     description:
-      "2012년 특허 등록! 스모크 햄과 부추, 삶은 달걀이 어우러진 든든한 빵. 다양한 재료를 조화롭게 만드는 당신의 리더십을 보여줘요.",
+      "2012년 특허 등록! 스모크 햄과 부추, 삶은 달걀이 어우러진 든든한 빵으로 영양과 맛을 동시에 만족시켜요. 당신도 다양한 사람들을 조화롭게 이끄는 따뜻한 리더십을 가졌을 거예요.",
     traits: ["배려심", "카리스마", "공감능력", "협력적"],
     image: "/assets/판타롱부추빵.webp",
   },
   ENFP: {
     name: "크림치즈화이트번",
     description:
-      "하얀 부드러운 빵 속 꾸덕한 블루베리 크림치즈와 톡톡 터지는 블루베리 알갱이! 다양한 식감과 상큼함으로 활발하고 창의적인 당신을 표현해요.",
+      "하얀 부드러운 빵 속 꾸덕한 블루베리 크림치즈와 톡톡 터지는 블루베리 알갱이! 다양한 식감과 상큼함으로 모든 순간을 즐겁게 만들어요. 당신도 활발하고 창의적인 에너지로 주변을 밝게 만들 것 같아요.",
     traits: ["활발함", "낙관적", "창의적", "사교적"],
     image: "/assets/크림치즈화이트번.webp",
   },
   ISTJ: {
     name: "월넛브레드",
     description:
-      "2018년 명예의 전당에 오른 검증된 베스트셀러! 호두와 견과류가 가득한 고소하고 든든한 빵으로 신뢰할 수 있는 당신의 안정감을 보여줘요.",
+      "2018년 명예의 전당에 오른 검증된 베스트셀러! 호두와 견과류가 가득한 고소하고 든든한 빵으로 오랫동안 사랑받고 있어요. 당신도 신뢰할 수 있고 안정적인 매력으로 사람들에게 든든함을 줄 것 같아요.",
     traits: ["책임감", "신뢰성", "체계적", "현실적"],
     image: "/assets/월넛브레드.webp",
   },
   ISFJ: {
     name: "순수롤",
     description:
-      "100% 순수 우유 크림을 듬뿍 넣은 담백한 롤케이크! 깔끔하고 정성스러운 맛으로 헌신적이고 세심한 당신의 따뜻함을 보여줘요.",
+      "100% 순수 우유 크림을 듬뿍 넣은 담백한 롤케이크! 깔끔하고 정성스러운 맛으로 모든 사람의 마음을 포근하게 만들어줘요. 당신도 헌신적이고 세심한 배려로 주변 사람들을 따뜻하게 감쌀 것 같아요.",
     traits: ["배려심", "헌신적", "따뜻함", "세심함"],
     image: "/assets/순수롤.webp",
   },
   ESTJ: {
     name: "명란바게트",
     description:
-      "바삭한 바게트에 최고급 덕화명란이 가득! 고품질 재료와 완벽한 조합으로 실용적이면서도 체계적인 당신의 면모를 보여줘요.",
+      "바삭한 바게트에 최고급 덕화명란이 가득! 고품질 재료와 완벽한 조합으로 한 번 먹으면 잊을 수 없는 강렬한 맛을 선사해요. 당신도 실용적이면서도 체계적인 능력으로 모든 일을 완벽하게 해낼 것 같아요.",
     traits: ["체계적", "실용적", "리더십", "책임감"],
     image: "/assets/명란바게트.webp",
   },
   ESFJ: {
     name: "공주알밤식빵",
     description:
-      "부드럽고 촉촉한 식빵 속에 달콤하고 담백한 공주알밤과 고구마가 콕콕 박혀 있는 영양 만점 식빵! 소보로 가루와 아몬드가 듬뿍 들어있어 풍미를 더하며, 자꾸만 손이 가는 마법 같은 맛으로 사교적인 당신과 어울려요.",
+      "부드럽고 촉촉한 식빵 속에 달콤한 공주알밤과 고구마가 콕콕! 소보로 가루와 아몬드까지 듬뿍 들어있어 자꾸만 손이 가는 마법 같은 맛이에요. 당신도 사교적이고 따뜻한 매력으로 사람들이 자꾸 찾게 만들 것 같아요.",
     traits: ["사교적", "배려심", "협력적", "따뜻함"],
     image: "/assets/공주알밤식빵.webp",
   },
   ISTP: {
     name: "튀소구마",
     description:
-      "튀김소보로의 고구마 버전! 바삭한 튀김옷 속 달콤한 고구마 무스로 조용하지만 확실한 매력을 가진, 실용적인 당신과 닮았어요.",
+      "튀김소보로의 고구마 버전! 바삭한 튀김옷 속 달콤한 고구마 무스로 조용하지만 확실한 매력을 발산해요. 당신도 겉으로 드러내지 않지만 실용적이고 분석적인 능력을 가졌을 것 같아요.",
     traits: ["실용적", "독립적", "분석적", "현실적"],
     image: "/assets/튀소구마.webp",
   },
   ISFP: {
     name: "김치찹쌀주먹밥",
     description:
-      "찹쌀밥에 김치와 채소를 넣고 바삭하게 튀긴 독창적인 메뉴! 누룽지 같은 고소함과 매콤함으로 조용하지만 확실한 개성을 보여줘요.",
+      "찹쌀밥에 김치와 채소를 넣고 바삭하게 튀긴 독창적인 메뉴! 누룽지 같은 고소함과 매콤함으로 한 번 맛보면 잊을 수 없는 특별함을 선사해요. 당신도 조용하지만 확실한 개성과 예술적 감각을 가졌을 것 같아요.",
     traits: ["예술적", "온화함", "섬세함", "개성적"],
     image: "/assets/김치찹쌀주먹밥.webp",
   },
   ESTP: {
     name: "키다리트위스트",
     description:
-      "9번 꼬아 만든 길쭉한 꽈배기 도넛! 바삭하고 쫄깃한 페이스트리로 활동적이고 에너지 넘치는 당신의 역동적인 매력을 보여줘요.",
+      "9번 꼬아 만든 길쭉한 꽈배기 도넛! 바삭하고 쫄깃한 페이스트리로 한 번 보면 눈에 확 띄는 독특함을 자랑해요. 당신도 활동적이고 에너지 넘치는 역동적인 매력으로 어디서든 주목받을 것 같아요.",
     traits: ["활동적", "즉흥적", "사교적", "현실적"],
     image: "/assets/키다리트위스트.webp",
   },
   ESFP: {
     name: "토요빵",
     description:
-      "2005년 토요일에 탄생한 보랏빛 빵! 적고구마와 타피오카 떡, 버터 쿠키 크럼의 특별한 조합으로 밝고 독특한 당신의 매력을 보여줘요.",
+      "2005년 토요일에 탄생한 보랏빛 빵! 적고구마와 타피오카 떡, 버터 쿠키 크럼의 특별한 조합으로 한 번 보면 잊을 수 없는 비주얼과 맛을 선사해요. 당신도 밝고 독특한 매력으로 모든 사람의 기억에 남을 것 같아요.",
     traits: ["밝음", "사교적", "즉흥적", "낙관적"],
     image: "/assets/토요빵.webp",
   },
@@ -362,12 +406,65 @@ export default function MBTITest() {
         await Promise.all(importantImages.map(preloadImage));
         setIsPreloading(false);
       } catch (error) {
-        console.error("이미지 preload 실패:", error);
+        // console.error("이미지 preload 실패:", error);
         setIsPreloading(false);
       }
     };
 
     preloadImages();
+  }, []);
+
+  // 카카오 SDK 동적 로드 및 초기화
+  useEffect(() => {
+    const loadKakaoSDK = () => {
+      // console.log("=== 카카오 SDK 로드 시도 ===");
+
+      // 이미 로드되어 있는지 확인
+      if (window.Kakao) {
+        // console.log("✅ 카카오 SDK 이미 로드됨");
+        initKakaoSDK();
+        return;
+      }
+
+      // 동적으로 스크립트 로드
+      const script = document.createElement("script");
+      script.src = "https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js";
+      script.crossOrigin = "anonymous";
+
+      script.onload = () => {
+        // console.log("✅ 카카오 SDK 스크립트 로드 완료");
+        initKakaoSDK();
+      };
+
+      script.onerror = () => {
+        // console.error("❌ 카카오 SDK 스크립트 로드 실패");
+      };
+
+      document.head.appendChild(script);
+    };
+
+    const initKakaoSDK = () => {
+      // console.log("=== 카카오 SDK 초기화 시도 ===");
+      // console.log("window.Kakao 존재:", !!window.Kakao);
+
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        const kakaoAppKey = import.meta.env.VITE_KAKAO_APP_KEY;
+        // console.log("카카오 앱 키:", kakaoAppKey ? "설정됨" : "없음");
+
+        if (kakaoAppKey) {
+          window.Kakao.init(kakaoAppKey);
+          // console.log("✅ 카카오 SDK 초기화 완료");
+        } else {
+          // console.warn("❌ 카카오 앱 키가 설정되지 않았습니다.");
+        }
+      } else if (window.Kakao && window.Kakao.isInitialized()) {
+        // console.log("✅ 카카오 SDK 이미 초기화됨");
+      } else {
+        // console.log("❌ window.Kakao 없음 - SDK 로드 실패");
+      }
+    };
+
+    loadKakaoSDK();
   }, []);
 
   const handleAnswer = (scores: Record<string, number>) => {
@@ -410,25 +507,116 @@ export default function MBTITest() {
     setResult("");
   };
 
-  const shareResult = () => {
+  // 카카오톡 공유 함수
+  const shareToKakao = () => {
     const bread = breadResults[result];
-    const shareText = `나의 성심당 빵 유형은 "${bread.name}"! 대전 성심당 MBTI 테스트 해보세요!`;
+    const currentUrl = window.location.href;
+
+    // console.log("=== 카카오톡 공유 시도 ===");
+    // console.log("window.Kakao 존재:", !!window.Kakao);
+    // console.log(
+    //   "Kakao 초기화 상태:",
+    //   window.Kakao ? window.Kakao.isInitialized() : false
+    // );
+    // console.log(
+    //   "환경변수 키:",
+    //   import.meta.env.VITE_KAKAO_APP_KEY ? "설정됨" : "없음"
+    // );
+
+    if (window.Kakao && window.Kakao.isInitialized()) {
+      try {
+        // HTTPS 이미지 URL 생성 (로컬에서는 배포된 사이트 이미지 사용)
+        const imageUrl =
+          window.location.protocol === "https:"
+            ? `${window.location.origin}${bread.image}`
+            : `https://breadmbti.vercel.app${bread.image}`;
+
+        // console.log("카카오톡 공유 데이터:", {
+        //   title: `저는 '${bread.name}'에요!`,
+        //   description: "당신은 무슨 빵인가요? 재미있는 테스트로 알아보세요!",
+        //   imageUrl: imageUrl,
+        //   url: currentUrl,
+        // });
+
+        window.Kakao.Share.sendDefault({
+          objectType: "feed",
+          content: {
+            title: `저는 '${bread.name}'에요!`,
+            description: "당신은 무슨 빵인가요? 재미있는 테스트로 알아보세요!",
+            imageUrl: imageUrl,
+            link: {
+              mobileWebUrl: currentUrl,
+              webUrl: currentUrl,
+            },
+          },
+          buttons: [
+            {
+              title: "나도 테스트하기",
+              link: {
+                mobileWebUrl: currentUrl,
+                webUrl: currentUrl,
+              },
+            },
+          ],
+        });
+        // console.log("✅ 카카오톡 공유 요청 완료");
+      } catch (error) {
+        // console.error("❌ 카카오톡 공유 예외:", error);
+        alert(
+          `카카오톡 공유 오류: ${
+            error instanceof Error ? error.message : "알 수 없는 오류"
+          }`
+        );
+        shareResult();
+      }
+    } else {
+      // console.log("카카오 SDK 없음 - 일반 공유로 이동");
+      alert("카카오톡 공유를 사용할 수 없습니다. 일반 공유를 이용해주세요.");
+      shareResult();
+    }
+  };
+
+  // 일반 공유 함수
+  const shareResult = async () => {
+    const bread = breadResults[result];
+    const shareText = `저는 '${bread.name}'에요! 당신은 무슨 빵인가요?`;
 
     if (navigator.share) {
       try {
-        navigator.share({
-          title: "성심당 빵 MBTI 테스트",
+        await navigator.share({
+          title: "나는 어떤 성심당 빵일까?",
           text: shareText,
           url: window.location.href,
         });
-      } catch {
+        // console.log("✅ 일반 공유 성공");
+      } catch (error) {
+        // console.log("❌ 일반 공유 실패:", error);
         // Web Share API 실패 시 클립보드 복사로 대체
-        navigator.clipboard.writeText(`${shareText} ${window.location.href}`);
-        alert("링크가 복사되었습니다!");
+        try {
+          await navigator.clipboard.writeText(
+            `${shareText} ${window.location.href}`
+          );
+          alert("링크가 복사되었습니다!");
+        } catch (clipboardError) {
+          // console.log("❌ 클립보드 복사 실패:", clipboardError);
+          // 클립보드도 실패하면 수동 복사 안내
+          const textToCopy = `${shareText} ${window.location.href}`;
+          prompt("아래 링크를 복사해주세요:", textToCopy);
+        }
       }
     } else {
-      navigator.clipboard.writeText(`${shareText} ${window.location.href}`);
-      alert("링크가 복사되었습니다!");
+      // Web Share API 미지원 시 클립보드 복사
+      try {
+        await navigator.clipboard.writeText(
+          `${shareText} ${window.location.href}`
+        );
+        alert("링크가 복사되었습니다!");
+      } catch (error) {
+        // console.log("❌ 클립보드 복사 실패:", error);
+        // 클립보드도 실패하면 수동 복사 안내
+        const textToCopy = `${shareText} ${window.location.href}`;
+        prompt("아래 링크를 복사해주세요:", textToCopy);
+      }
     }
   };
 
@@ -456,16 +644,16 @@ export default function MBTITest() {
             )}
           </div>
           <h1 className="text-3xl font-bold text-amber-800 mb-2">
-            성심당 빵 MBTI
+            나는 어떤 성심당 빵일까?
           </h1>
           <p className="text-sm text-gray-500 mb-4 font-medium">
             (비공식 팬사이트)
           </p>
           <p className="text-gray-600 mb-2 leading-relaxed">
-            대전의 자랑, 성심당 빵으로 알아보는
+            만약 내가 성심당 빵이라면
           </p>
           <p className="text-gray-600 mb-8 leading-relaxed">
-            나의 성격 유형은?
+            어떤 빵의 매력을 가졌을까요?
           </p>
           <button
             onClick={() => setCurrentPage("quiz")}
@@ -540,12 +728,10 @@ export default function MBTITest() {
           )}
         </div>
 
-        <h1 className="text-2xl font-bold text-amber-800 mb-2">
-          당신은 {bread.name} 타입!
-        </h1>
-
         <div className="bg-amber-100 rounded-lg p-3 mb-6">
-          <span className="text-amber-800 font-semibold text-lg">{result}</span>
+          <span className="text-amber-800 font-semibold text-lg">
+            {bread.name}
+          </span>
         </div>
 
         <p className="text-gray-600 mb-6 leading-relaxed">
@@ -568,11 +754,19 @@ export default function MBTITest() {
 
         <div className="space-y-3">
           <button
+            onClick={shareToKakao}
+            className="w-full bg-[#FEE500] text-[#371d1e] font-bold py-3 px-6 rounded-xl hover:bg-[#FFD400] transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+          >
+            <MessageCircle className="w-4 h-4" />
+            카카오톡으로 공유하기
+          </button>
+
+          <button
             onClick={shareResult}
             className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
           >
             <Share2 className="w-4 h-4" />
-            결과 공유하기
+            다른 방법으로 공유하기
           </button>
 
           <button
