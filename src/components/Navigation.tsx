@@ -13,7 +13,7 @@ export default function Navigation({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { id: "mbti", label: "빵 MBTI", icon: Cake },
+    { id: "mbti", label: "나는 어떤 빵?", icon: Cake },
     { id: "map", label: "빵집 지도", icon: MapPin },
     { id: "random", label: "오늘의 빵 담당자", icon: Shuffle },
   ];
